@@ -22,7 +22,7 @@ Lenguaje Comparativo: **Scheme**
 | **Agustin M Stoppello** | Coordinador y Arquitectura General | [@Agustinstpp] |
 | **Matías Luciano Romero** | Núcleo Lisp (Fase 1) | [@matiassromero] |
 | **Julieta Estefania Romero** | Documentación e Informe Técnico | [@Julieta-Git] |
-| **Axel Gabriel Nuñez** | Integración de Librerías (Fase 2) | [@] |
+| **Axel Gabriel Nuñez** | Integración de Librerías (Fase 2) | [@axeel.nunezz] |
 | **Torres Alexis Joaquin** | Lenguaje Comparativo - Scheme (Fase 3) | [@Torres-Alexis-Joaquin] |
 
 ---
