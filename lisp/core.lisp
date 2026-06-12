@@ -8,11 +8,11 @@
 (defun transicion (color-actual cambiar)
   (cond
     ((eq cambiar 'rojo)
-     (list color-actual "cambiar-a-rojo"))
+     (list color-actual "cambiar_a_rojo"))
     ((eq cambiar 'amarillo)
-     (list color-actual "cambiar-a-amarillo"))
+     (list color-actual "cambiar_a_amarillo"))
     ((eq cambiar 'verde)
-     (list color-actual "cambiar-a-verde"))
+     (list color-actual "cambiar_a_verde"))
     (t
      (list color-actual 'accion-por-defecto))
   )
@@ -25,13 +25,12 @@
 ;; IMPACTO: No destructiva
 ;==============================================================
 
-
 (defun timer (timestamp)
   (let ((ciclo (mod timestamp 216)))
     (cond
       ((< ciclo 90) 'rojo)
-      ((< ciclo 96) 'amarillo)
-      (t 'verde)
+      ((< ciclo 210) 'verde)
+      (t 'amarillo)
     )
   )
 )
@@ -102,31 +101,10 @@
 (defun distribucionHora ()
   (list
     (list 'rojo
-          (* (/ 90 216) 100))
+          (* (/ 90.0 216) 100))
     (list 'amarillo
-          (* (/ 6 216) 100))
+          (* (/ 6.0 216) 100))
     (list 'verde
-          (* (/ 120 216) 100))
+          (* (/ 120.0 216) 100))
   )
-)
-
-;==============================================================
-;; Fase 2: Integrador
-;==============================================================
-;; FUNCION: mostrarCambio
-;; NATURALEZA: Impura
-;; ESTRATEGIA: Salida por pantalla + uso de librería local-time
-;; IMPACTO: No destructiva
-;==============================================================
-
-(ql:quickload "local-time")
-
-(defun mostrarCambio (tiempo colorAnt colorNue)
-  (format t
-          "[~A] La luz ha cambiado de ~A a ~A~%"
-          (local-time:format-timestring
-             nil
-             (local-time:unix-to-timestamp tiempo))
-          colorAnt
-          colorNue)
 )
