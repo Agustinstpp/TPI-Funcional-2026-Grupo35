@@ -1,4 +1,5 @@
-![][image1]
+<img width="1536" height="1024" alt="portada_informe" src="https://github.com/user-attachments/assets/f9e4b327-a25d-43c2-a3c5-fb1e644b8ec3" />
+
 
 \#\# FASE 1: El Problema de los 3 Focos (Desarrollo del Núcleo)   
 A continuación, se detalla y clasifica taxonómicamente el catálogo de funciones que componen la lógica central del control urbano, diseñadas bajo las directrices estrictas de inmutabilidad absoluta y ausencia de bucles imperativos  
