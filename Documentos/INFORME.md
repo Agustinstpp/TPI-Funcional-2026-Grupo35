@@ -67,11 +67,15 @@ Esto abrirá una pestaña en Sublime con el intérprete correspondiente. Este in
 \`\`\`bash  
 sbcl \--load core.lisp
 
+### Instalación de SBCL
+
+Como prerequisito para la Fase 2, es necesario instalar Steel Bank Common Lisp (SBCL). En Windows, se descarga el instalador desde el sitio oficial: https://www.sbcl.org/platform-table.html y se ejecuta el instalador `.msi` correspondiente. Una vez instalado, el comando `sbcl` queda disponible desde PowerShell.
+
 ### Instalación de Quicklisp
 
 Quicklisp es un gestor de paquetes para Common Lisp que permite descargar e instalar librerías de forma automatizada desde su repositorio centralizado.
 
-#### Pasos realizados:
+#### Pasos realizados en SBCL:
 
 1. Se descargó el archivo instalador quicklisp.lisp desde el sitio oficial: https://www.quicklisp.org/beta/  
 2. Se cargó el instalador en SBCL desde la terminal:  
@@ -86,6 +90,19 @@ Quicklisp es un gestor de paquetes para Common Lisp que permite descargar e inst
 
 Con esto, Quicklisp quedó instalado en el directorio \~/quicklisp/ y se configuró para cargarse automáticamente cada vez que se inicia SBCL.
 
+#### Instalación alternativa en CLISP (Sublime Text 3)
+
+También es posible instalar Quicklisp utilizando CLISP desde Sublime Text 3, el intérprete que se utilizó normalmente durante la cursada:
+
+1. Abrir el archivo `quicklisp.lisp` (previamente descargado) directamente en Sublime Text 3.  
+2. Iniciar el intérprete CLISP a través del atajo de teclado Alt+Ctrl+H. Al abrir el archivo `.lisp` en Sublime, SublimeREPL lo carga automáticamente, por lo que no es necesario ejecutar un `(load ...)` manual.  
+3. Dentro del REPL de CLISP, ejecutar los comandos de instalación:  
+   Lisp  
+   (quicklisp-quickstart:install)  
+   (ql:add-to-init-file)  
+
+En este caso, Quicklisp se configura para CLISP y queda disponible en las sesiones posteriores de dicho intérprete.
+
 ### Instalación de cl-json
 
 Con Quicklisp disponible, la instalación de cl-json se realizó con un único comando desde el REPL:
@@ -96,7 +113,7 @@ Lisp
 Para verificar su correcto funcionamiento se ejecutó:
 
 Lisp  
-(json:decode-json-from-string "{\\"rojo\\": 90}")  
+(json:decode-json-from-string "{\"rojo\": 90}")  
 ;; Devolviendo → ((:ROJO . 90))
 
 La librería convierte las claves del JSON en keywords de Common Lisp (símbolos precedidos por :), y los pares clave-valor en una lista de asociación (*association list* o *alist*), una estructura nativa del lenguaje.
@@ -148,7 +165,7 @@ Carga de Quicklisp y cl-json al inicio del archivo:
 Lisp
 
 (load "\~/quicklisp/setup.lisp")  
-(ql:quickload "cl-json" :silent t)}
+(ql:quickload "cl-json" :silent t)
 
 Esta forma de cargar Quicklisp lanza advertencias normales e inofensivas en el REPL que redefinen funciones internas de la librería y no afectan al funcionamiento del sistema:
 
@@ -254,6 +271,12 @@ Scheme
 3\. \*\*Bug del Predicado de Igualdad de Símbolos (Migración a Scheme):\*\* Al transponer la lógica de comparación de estados al archivo \`.scm\`, las funciones arrojaban respuestas erróneas o caían en la cláusula por defecto. Causa: Intentar utilizar el operador primitivo \`eq\` de Common Lisp. Solución: Se reemplazó por el predicado nativo correspondiente exigido por el estándar de Scheme: \`eq?\`. 
 
 4\. \*\*Bug de Tipos de Keywords en la Alist (Migración a Scheme):\*\* La función \`assoc\` fallaba consistentemente al mapear los tiempos dinámicos trasladados desde el archivo JSON en el entorno de Scheme. Causa: Scheme no posee de forma nativa la sintaxis de \*Keywords\* precedidos por dos puntos (\`:rojo\`) tal como lo parsea la librería \`cl-json\` de Common Lisp. Solución: Se adaptaron los identificadores del JSON dentro de la estructura asociativa convirtiéndolos en símbolos puros y literales del lenguaje mediante el uso de la comilla simple (\`'rojo\`, \`'verde\`). 
+
+5\. \*\*Bug de Resolución de Ruta \`~\` en CLISP Windows:\*\* Al intentar ejecutar \`core.lisp\` desde CLISP en Windows, el intérprete lanzaba el error: \`LOAD: A file with name ~/quicklisp/setup.lisp does not exist\`. Causa: En sistemas Unix, el carácter \`~\` es expandido por el shell al directorio home del usuario (ej. \`/home/usuario/\`). SBCL en Windows replica este comportamiento internamente, pero CLISP no lo hace: interpreta \`~\` de forma literal como parte del nombre de la ruta, buscando un directorio que no existe. Solución: Se agregó en \`core.lisp\` una línea alternativa comentada con la ruta absoluta completa de Windows para CLISP (ej. \`C:/Users/Axel/quicklisp/setup.lisp\`). Según el intérprete que se utilice, se comenta o descomenta la línea correspondiente:
+
+Lisp  
+(load "\~/quicklisp/setup.lisp")           ;; SBCL  
+;; (load "C:/Users/Axel/quicklisp/setup.lisp")  ;; CLISP
 
 \#\# BIBLIOGRAFÍA
 
