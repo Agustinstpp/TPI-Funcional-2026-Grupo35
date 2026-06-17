@@ -5,6 +5,11 @@
 ;;==============================================================
 
 (load "~/quicklisp/setup.lisp")
+;En caso de utilizar clisp, este formato de carga para quicklisp no funciona
+;clisp no rellena la direccion con ~, por lo tanto se debe cambiar esto por la
+;direccion extacta del quicklisp. Por ejemplo:
+;(load "C:/Users/Axel/quicklisp/setup.lisp")
+
 (ql:quickload "cl-json" :silent t)
 
 ;==============================================================
