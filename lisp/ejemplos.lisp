@@ -33,17 +33,17 @@
 ;; Transicion de rojo a verde
 (format t "Ejemplo 1.1 - Normal: (transicion 'en-rojo 'verde)~%")
 (format t "  Resultado: ~A~%" (transicion 'en-rojo 'verde))
-;; Esperado: (EN-ROJO CAMBIAR_A_VERDE)
+;; Esperado: (EN-ROJO "CAMBIAR-A-VERDE")
 
 ;; Transicion de verde a amarillo
 (format t "Ejemplo 1.2 - Normal: (transicion 'en-verde 'amarillo)~%")
 (format t "  Resultado: ~A~%" (transicion 'en-verde 'amarillo))
-;; Esperado: (EN-VERDE CAMBIAR_A_AMARILLO)
+;; Esperado: (EN-VERDE "CAMBIAR-A-AMARILLO")
 
 ;; Transicion de amarillo a rojo
 (format t "Ejemplo 1.3 - Normal: (transicion 'en-amarillo 'rojo)~%")
 (format t "  Resultado: ~A~%" (transicion 'en-amarillo 'rojo))
-;; Esperado: (EN-AMARILLO CAMBIAR_A_ROJO)
+;; Esperado: (EN-AMARILLO "CAMBIAR-A-ROJO")
 
 ;; --- Caminos alternativos ---
 ;; Transicion con color destino invalido -> accion-por-defecto
@@ -59,7 +59,7 @@
 ;; Estado actual no estandar pero destino valido
 (format t "Ejemplo 1.6 - Alternativo: (transicion 'apagado 'rojo)~%")
 (format t "  Resultado: ~A~%" (transicion 'apagado 'rojo))
-;; Esperado: (APAGADO CAMBIAR_A_ROJO)
+;; Esperado: (APAGADO "CAMBIAR-A-ROJO")
 
 ;; --- Casos de error ---
 ;; Sin argumentos: genera error por falta de parametros
@@ -352,6 +352,49 @@
 (format t "Ejemplo 6.4 - Error: (distribucion-hora nil) -> config vacia~%")
 (format t "  Al ejecutar (distribucion-hora nil) se genera:~%")
 (format t "  ERROR: The value NIL is not of type NUMBER~%~%")
+
+
+;;==============================================================
+;; REQUERIMIENTO 8: informe (persistencia de datos)
+;; Funcion: (informe datos)
+;; Se arma el log de transiciones y se pasa a informe
+;;==============================================================
+
+(format t "~%--- REQUERIMIENTO 8: informe ---~%~%")
+
+;; --- Funcionamiento normal ---
+;; Armado del log de transiciones de un ciclo completo
+(format t "Ejemplo 8.1 - Normal: Generar informe con log de transiciones~%")
+(let ((log-transiciones
+        (list
+          (format nil "Transicion: INICIO -> ~A" (timer 0 config))
+          (format nil "Transicion: ~A -> ~A" (timer 92 config) (timer 93 config))
+          (format nil "Transicion: ~A -> ~A" (timer 215 config) (timer 216 config))
+          (format nil "Transicion: ~A -> ~A" (timer 224 config) (timer 225 config)))))
+  (format t "  Log armado: ~A~%" log-transiciones)
+  (informe log-transiciones))
+;; Esperado: Se genera 'informe-ejecucion-semaforo.txt' con:
+;;   Transicion: INICIO -> ROJO
+;;   Transicion: ROJO -> VERDE
+;;   Transicion: VERDE -> AMARILLO
+;;   Transicion: AMARILLO -> ROJO
+
+;; --- Caminos alternativos ---
+;; Lista vacia: genera el archivo solo con encabezado y pie
+(format t "Ejemplo 8.2 - Alternativo: (informe nil) -> lista vacia~%")
+(informe nil)
+;; Esperado: Se genera el archivo solo con encabezado y 'Fin del Informe'
+
+;; Un solo registro
+(format t "Ejemplo 8.3 - Alternativo: (informe '(\"Transicion: ROJO -> VERDE\"))~%")
+(informe '("Transicion: ROJO -> VERDE"))
+;; Esperado: Se genera el archivo con una sola linea de transicion
+
+;; --- Casos de error ---
+;; Sin argumentos: genera error por falta de parametros
+(format t "Ejemplo 8.4 - Error: (informe) -> sin argumentos~%")
+(format t "  Al ejecutar (informe) se genera:~%")
+(format t "  ERROR: invalid number of arguments: 0~%~%")
 
 
 ;;==============================================================
