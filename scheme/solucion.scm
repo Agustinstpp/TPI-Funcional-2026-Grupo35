@@ -40,31 +40,17 @@
          (time-verde (obtener-tiempo config 'verde))
          (time-amarillo (obtener-tiempo config 'amarillo))
          (time-intermitente 3)
-         (total (+ time-rojo
-                   time-intermitente
-                   time-verde
-                   time-intermitente
-                   time-amarillo
-                   time-intermitente))
+         (total (+ time-rojo time-intermitente
+                   time-verde time-intermitente
+                   time-amarillo time-intermitente))
          (ciclo (modulo timestamp total)))
     (cond
-      ((< ciclo time-rojo)
-       'rojo)
-
-      ((< ciclo (+ time-rojo time-intermitente))
-       'rojo-intermitente)
-
-      ((< ciclo (+ time-rojo time-intermitente time-verde))
-       'verde)
-
-      ((< ciclo (+ time-rojo time-intermitente time-verde time-intermitente))
-       'verde-intermitente)
-
-      ((< ciclo (+ time-rojo time-intermitente time-verde time-intermitente time-amarillo))
-       'amarillo)
-
-      (else
-       'amarillo-intermitente))))
+      ((< ciclo time-rojo) 'rojo)
+      ((< ciclo (+ time-rojo time-intermitente)) 'rojo-intermitente)
+      ((< ciclo (+ time-rojo time-intermitente time-verde)) 'verde)
+      ((< ciclo (+ time-rojo time-intermitente time-verde time-intermitente)) 'verde-intermitente)
+      ((< ciclo (+ time-rojo time-intermitente time-verde time-intermitente time-amarillo)) 'amarillo)
+      (else 'amarillo-intermitente))))
 
 ;; ========================================================
 ;; PRUEBAS SUGERIDAS
