@@ -84,7 +84,7 @@
 ;; IMPACTO: No destructiva
 ;==============================================================
 
-(defun mostrarCambio (tiempo colorAnt colorNue)
+(defun mostrar-cambio (tiempo colorAnt colorNue)
   (format t
           "Tiempo ~A: la luz ha cambiado de ~A a ~A~%"
           tiempo
@@ -99,7 +99,7 @@
 ;; IMPACTO: No destructiva
 ;==============================================================
 
-(defun duracionCiclo (config)
+(defun duracion-ciclo (config)
   (+ (obtener-tiempo config :rojo)
      (obtener-tiempo config :amarillo)
      (obtener-tiempo config :verde))
@@ -112,7 +112,7 @@
 ;; IMPACTO: No destructiva
 ;==============================================================
 
-(defun recomendacionCiclo (duracion)
+(defun recomendacion-ciclo (duracion)
   (cond
     ((< duracion 35)
       "Ciclo demasiado corto")
@@ -130,7 +130,7 @@
 ;; IMPACTO: No destructiva
 ;==============================================================
 
-(defun ciclosPorTiempo (minutos config)
+(defun ciclos-por-tiempo (minutos config)
   (floor (/ (* minutos 60)
             (duracionCiclo config)))
 )
@@ -142,7 +142,7 @@
 ;; IMPACTO: No destructiva
 ;==============================================================
 
-(defun distribucionHora (config)
+(defun distribucion-hora (config)
   (let* ((time-rojo     (obtener-tiempo config :rojo))
          (time-amarillo (obtener-tiempo config :amarillo))
          (time-verde    (obtener-tiempo config :verde))
