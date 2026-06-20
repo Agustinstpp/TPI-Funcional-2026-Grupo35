@@ -46,11 +46,11 @@
 (defun transicion (color-actual cambiar)
   (cond
     ((eq cambiar 'rojo)
-     (list color-actual 'cambiar_a_rojo))
+     (list color-actual "cambiar-a-rojo"))
     ((eq cambiar 'amarillo)
-     (list color-actual 'cambiar_a_amarillo))
+     (list color-actual "cambiar-a-amarillo"))
     ((eq cambiar 'verde)
-     (list color-actual 'cambiar_a_verde))
+     (list color-actual "cambiar-a-verde"))
     (t
      (list color-actual 'accion-por-defecto))
   )
