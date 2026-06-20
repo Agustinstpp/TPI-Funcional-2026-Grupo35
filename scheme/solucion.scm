@@ -29,17 +29,12 @@
      (list color-actual 'accion-por-defecto))))
 
 ;; ========================================================
-;; FUNCION: semaforo-en
+;; FUNCION: timer
 ;; NATURALEZA: Pura
 ;; ESTRATEGIA: Uso de modulo sobre duracion dinamica
 ;; IMPACTO: No destructiva
-;; ========================================================
-;; NOTA:
-;; Esta funcion cumple el rol de TIMER del enunciado original.
-;; Se utiliza el nombre semaforo-en para mantener consistencia
-;; con la implementacion Common Lisp del proyecto.
 
-(define (semaforo-en timestamp config)
+(define (timer timestamp config)
   (let* ((time-rojo (obtener-tiempo config 'rojo))
          (time-verde (obtener-tiempo config 'verde))
          (time-amarillo (obtener-tiempo config 'amarillo))
@@ -64,14 +59,14 @@
 ;; (transicion 'en-rojo 'azul)
 ;; Resultado esperado: '(en-rojo accion-por-defecto)
 
-;; (semaforo-en 0 config)
+;; (timer 0 config)
 ;; Resultado esperado: 'rojo
 
-;; (semaforo-en 90 config)
+;; (timer 90 config)
 ;; Resultado esperado: 'verde
 
-;; (semaforo-en 210 config)
+;; (timer 210 config)
 ;; Resultado esperado: 'amarillo
 
-;; (semaforo-en 216 config)
+;; (timer 216 config)
 ;; Resultado esperado: 'rojo
