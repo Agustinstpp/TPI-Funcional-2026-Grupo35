@@ -31,14 +31,14 @@ Lenguaje Comparativo: **Scheme**
 ```text
 TPI-Funcional-2026-Grupo35/
 ├── README.MD                ← Portada del proyecto
-├── Documentos/
+├── docs/
 │   ├── Honor.md             ← Declaración de código de honor
 │   └── Informe.md           ← Informe técnico del trabajo
 ├── lisp/                    ← Implementación en Lisp
 │   ├── core.lisp            ← Funciones principales(Req. 1 al 6)
 │   ├── ejemplos.lisp        ← Casos de prueba y ejemplos
 │   └── config.json          ← Configuración externa para Fase 2
-└── scheme/                  ← Traducción comparativa a Scheme
+└── comparativa/             ← Traducción comparativa a Scheme
     └── solucion.scm         ← Funciones de transición + timer
 ```
 ---
