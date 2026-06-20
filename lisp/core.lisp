@@ -4,11 +4,8 @@
 ;; la lectura dinamica de tiempos desde un archivo .json externo
 ;;==============================================================
 
-(load "~/quicklisp/setup.lisp")
-;En caso de utilizar clisp, este formato de carga para quicklisp no funciona
-;clisp no rellena la direccion con ~, por lo tanto se debe cambiar esto por la
-;direccion extacta del quicklisp. Por ejemplo:
-;(load "C:/Users/Axel/quicklisp/setup.lisp")
+; Modificar esta linea de acuerdo a la ruta correspondiente de su equipo, reemplazando "user"
+(load "C:/Users/user/quicklisp/setup.lisp")
 
 (ql:quickload "cl-json" :silent t)
 
@@ -132,7 +129,7 @@
 
 (defun ciclos-por-tiempo (minutos config)
   (floor (/ (* minutos 60)
-            (duracionCiclo config)))
+            (duracion-ciclo config)))
 )
 
 ;==============================================================
@@ -169,10 +166,26 @@
     (format stream "Informe de Ejecución del Sistema Semafórico~%")
     (format stream "=========================================~%")
     
-    ;; Uso de recursividad para cumplir con la restricción de 'Cero Bucles'
-    (labels ((escribir-lineas (lista)
+    ;; labels: permite definir funciones locales con nombre dentro de otra funcion.
+    (labels (
+             ;; obtener-fecha: lee la fecha y hora actual del sistema operativo.
+             ;; get-decoded-time es una funcion nativa de Common Lisp que devuelve
+             ;; 9 valores: segundo, minuto, hora, dia, mes, anio, dia-semana, horario-verano y zona-horaria.
+             ;; multiple-value-bind captura los primeros 6 valores en variables locales.
+             ;; format nil retorna un string (sin imprimirlo) con el formato AAAA-MM-DD HH:MM:SS
+             ;; Directiva ~N,'0D: imprime un entero Decimal con N digitos minimos, rellenando con '0' a la izquierda. Ej: (format nil "~2,'0D" 6) -> "06"
+             (obtener-fecha ()
+               (multiple-value-bind (seg min hora dia mes anio)
+                   (get-decoded-time)
+                 (format nil "~4,'0D-~2,'0D-~2,'0D ~2,'0D:~2,'0D:~2,'0D"
+                         anio mes dia hora min seg)))
+
+             ;; escribir-lineas: recorre la lista de logs recursivamente.
+             ;; En cada llamada, escribe la fecha/hora seguida del primer elemento (car),
+             ;; y luego se llama a si misma con el resto de la lista (cdr).
+             (escribir-lineas (lista)
                (when lista
-                 (format stream "~A~%" (car lista))
+                 (format stream "~A - ~A~%" (obtener-fecha) (car lista))
                  (escribir-lineas (cdr lista)))))
       (escribir-lineas datos))
       
