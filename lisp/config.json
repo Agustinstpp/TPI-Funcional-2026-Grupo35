@@ -1,5 +1,9 @@
 {
-  "rojo": 93,
-  "amarillo": 9,
-  "verde": 123
+  "rojo": 90,
+  "rojo-intermitente": 3,
+  "amarillo": 6,
+  "amarillo-intermitente": 3,
+  "verde": 120,
+  "verde-intermitente": 3
 }
+
